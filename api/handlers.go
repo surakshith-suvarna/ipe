@@ -7,6 +7,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"html"
 	"net/http"
 	"net/url"
 	"sort"
@@ -102,7 +103,7 @@ func CheckAppDisabled(storage storage.Storage) func(http.Handler) http.Handler {
 			currentApp, err := storage.GetAppByAppID(appID)
 
 			if err != nil {
-				http.Error(w, string(fmt.Sprintf("Could not found an app with app_id: %s", appID)), http.StatusForbidden)
+				http.Error(w, fmt.Sprintf("Could not found an app with app_id: %s", html.EscapeString(appID)), http.StatusForbidden)
 				return
 			}
 
